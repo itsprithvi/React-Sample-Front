@@ -1,24 +1,20 @@
 import React from 'react'
-import { useState } from 'react';
+import ItemsList from './ItemsList'
 
-const Content = () => {
-
-    const [name, setName] = useState('');
-
-    function handleNameChange() {
-        const names = ["Earn", "Grow", "Give"];
-        const ind = Math.floor(Math.random()*3);
-
-        setName(names[ind])
-
-        return name
-    }
-    
+const Content = ({items, handleCheck, handleDelete}) => {
 
   return (
     <main>
-        <p>Let's {name} Money</p>
-        <button onClick={() => handleNameChange()}> Subscribe </button>
+        {(items.length) ? (
+            <ItemsList
+                items = {items}
+                handleCheck = {handleCheck}
+                handleDelete = {handleDelete}
+            />
+        ) : (
+            <h2>Your List is Empty</h2>
+        )}
+        
     </main>
   )
 }
