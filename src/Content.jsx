@@ -3,37 +3,22 @@ import { useState } from 'react';
 
 const Content = () => {
 
-    
-
-    useState();
-    useState();
-    useState();
-
+    const [name, setName] = useState('');
 
     function handleNameChange() {
         const names = ["Earn", "Grow", "Give"];
-        const int = Math.floor(Math.random()*3);
+        const ind = Math.floor(Math.random()*3);
 
-        return names[int];
+        setName(names[ind])
+
+        return name
     }
-
-    const [count, setCount] = useState(0);
-
-    function incrementFunction() {
-        setCount(count+1)
-    }
-
-    function decrementFunction() {
-        setCount(count-1)
-    }
+    
 
   return (
     <main>
-        <p>Let's Earn Monry</p>
-        <button> Subscribe </button>
-        <button onClick={decrementFunction}>-</button>
-        <span>{count}</span>
-        <button onClick={incrementFunction}>+</button>
+        <p>Let's {name} Money</p>
+        <button onClick={() => handleNameChange()}> Subscribe </button>
     </main>
   )
 }
