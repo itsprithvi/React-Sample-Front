@@ -5,32 +5,19 @@ import Header from "./Header";
 import { useState } from 'react';
 import './App.css';
 import AddItem from "./AddItem";
+import SearchItem from "./SearchItem";
 
 
 
 function App() {
 
   const [items, setItems] = useState(
-    [
-        {
-            id: 1,
-            checked : false,
-            item : 'Practice Coding'
-        },
-        {
-            id: 2,
-            checked : false,
-            item : 'Play Cricket'
-        },
-        {
-            id: 3,
-            checked : false,
-            item : 'Reading Book'
-        }
-    ]
+    JSON.parse(localStorage.getItem("todo_list"))
   )
   
   const [newItem, setNewItem] = useState('');
+
+  const [search, setSearch] = useState('')
 
   const addItem = (item) => {
     const addNewItem = {id:item.length+1, checked: false, item}
@@ -67,14 +54,18 @@ function App() {
 
   return (
     <div className="App">
-      <Header  title="prithvi University" />
+      <Header  title="To do List" />
       <AddItem 
         newItem = {newItem}
         setNewItem = {setNewItem}
         handleSubmit = {handleSubmit}
       />
+      <SearchItem 
+        search = {search}
+        setSearch = {setSearch}
+      />
       <Content 
-        items = {items}
+        items = {items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
         handleCheck = {handleCheck}
         handleDelete = {handleDelete}
       />
@@ -86,7 +77,7 @@ function App() {
 }
 
 Header.defaultProps = {
-  title: "Stanford University"
+  title: "Common List"
 }
 
 export default App;
