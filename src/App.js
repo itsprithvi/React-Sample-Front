@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { useState } from 'react';
 import './App.css';
+import AddItem from "./AddItem";
 
 
 
@@ -29,10 +30,20 @@ function App() {
     ]
   )
   
+  const [newItem, setNewItem] = useState('');
+
+  const addItem = (item) => {
+    const addNewItem = {id:item.length+1, checked: false, item}
+    const listItems = [...items, addNewItem]
+    setItems(listItems)
+    localStorage.setItem("todo_list", JSON.stringify(listItems))
+  }
+
   const handleCheck = (id) => {
     console.log(`id ${id}`);
     const listItems = items.map((item) => item.id===id ? {...item ,checked: !item.checked}: item)
     setItems(listItems)
+    localStorage.setItem("todo_list", JSON.stringify(listItems)) 
   }
   
   const handleDelete = (id) => {
@@ -43,12 +54,25 @@ function App() {
   
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(!newItem) return;
+    console.log(newItem);
+    addItem(newItem)
+    setNewItem('')
+  }
 
+ 
 
 
   return (
     <div className="App">
       <Header  title="prithvi University" />
+      <AddItem 
+        newItem = {newItem}
+        setNewItem = {setNewItem}
+        handleSubmit = {handleSubmit}
+      />
       <Content 
         items = {items}
         handleCheck = {handleCheck}
